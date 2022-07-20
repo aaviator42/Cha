@@ -199,7 +199,7 @@ $thesaurus = [["big", "huge", "large"], ["small", "tiny"]];
 ```
 
 ### 4. `addSupplements(<query array>, $supplements)`
-Unlike `addSynonyms()`, this is a one-way function. Use this when, for e.g., you want queries containing "cat" to always match with "domestic" and "pet", but not the other way around. 
+Unlike `addSynonyms()`, this is a "one-way" function. Use this when, for e.g., you want queries containing "cat" to always match with "domestic" and "pet", but not the other way around. 
 
 Expected format of `$supplements`:
 
