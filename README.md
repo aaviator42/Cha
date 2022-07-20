@@ -230,7 +230,9 @@ $index = [
           "img6" => ["sky", "sun", "nature", "blue", "skyline"]
          ];
 ```
-Sample output:
+
+The returned array contains the names of the items, and the number of tag matches that were found, like such:
+
 ```
 array(6) {
   ["img5"]=>
