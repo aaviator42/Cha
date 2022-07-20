@@ -18,7 +18,7 @@ img5: sunset, happy, city, skyline, nature
 img6: sky, sun, nature, blue, skyline
 ```
 
-Cha allows you to query the index (for e.g., `city skyline` or `puppy playing with human`), and returns items based on decreasing relevance.
+Cha allows you to query the index (for e.g., `city skyline` or `puppy playing with human`), and returns items sorted from most to least relevant.
 
 ## How does it work?
 
@@ -84,7 +84,7 @@ Here's how a search query would get processed at each step:
 
 Here's the code for the example from the previous section.  
 
-Obviously in real-world use cases the index and wordlists (thesaurus, supplements etc) would be read from a DB. 
+Obviously in real-world use cases the index and wordlists (thesaurus, supplements, etc) would be read from a DB. 
 
 The functions used are explained in the next section.
 
