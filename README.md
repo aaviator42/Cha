@@ -124,7 +124,7 @@ $corrections = [
 
 //word supplements
 $supplements = [
-                "dog"	=> ["animal", "pet", "domesticated"],
+                "dog" => ["animal", "pet", "domesticated"],
                 "cat" => ["animal", "pet", "domesticated"],
                 "red" => ["color"]
                ];
@@ -204,7 +204,7 @@ Unlike `addSynonyms()`, this is a "one-way" function. Use this when, for e.g., y
 Expected format of `$supplements`:
 
 ```php
-$supplements = ["cat" => ["calilco", "animal", "pet", "domestic], "red" => ["color"], "laptop" => ["gadget", "tech"]];
+$supplements = ["cat" => ["calilco", "animal", "pet", "domestic"], "red" => ["color"], "laptop" => ["gadget", "tech"]];
 ```
 
 ### 5. `dropWords(<query array>, $droplist)`
@@ -252,4 +252,4 @@ array(6) {
 
 
 ------
-Documentation updated: `2022-07-20`
+Documentation updated: `2022-08-11`
