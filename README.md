@@ -233,7 +233,7 @@ $index = [
 
 The returned array contains the names of the items, and the number of tag matches that were found, like such:
 
-```
+```php
 array(6) {
   ["img5"]=>
   int(4)
