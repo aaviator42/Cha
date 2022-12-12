@@ -1,7 +1,7 @@
 <?php
 /*
 Cha.php
-v1.0 - 2022-07-20
+v1.1 - 2022-12-09
 
 By @aaviator42
 License: AGPLv3
@@ -148,14 +148,37 @@ function correctSpellings($qArray, $corrections){
 }
 
 
-function search($qArray, $index){
+function search($qArray, $index, $confidence = 100){
 	$results = array();
+	
+	//no fuzziness
+	if($confidence >= 100){
+		//compare tags with every item in index
+		foreach($index as $item => $tags){
+			$results[$item] = count(array_intersect($qArray, $tags));
+		}
+		arsort($results);
+		return $results;
+	}
+	
+	if($confidence < 0){
+		$confidence = 0;
+	}
+	
 	//compare tags with every item in index
 	foreach($index as $item => $tags){
-		$results[$item] = count(array_intersect($qArray, $tags));
+		foreach($qArray as $qWord){
+			foreach($tags as $tag){
+				$similarity;
+				similar_text($tag, $qWord, $similarity);
+				if($similarity >= $confidence){
+					$results[$item]++;
+				}
+			}
+		}
 	}
+		
 	arsort($results);
 	return $results;
+
 }
-
-
