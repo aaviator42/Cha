@@ -236,7 +236,8 @@ Uses the query array to search the index and returns an array sorted from most t
 
 **Fuzzy Searches:**
 
-The third argument, `confidence` (percentage) is optional. Valid values are `0 - 100`. Recommended value is `85`. Default value is `100`. Use this to control search fuzziness. 100% means that the function will only count a match if the spellings of the tag and keyword match exactly (unfuzzy search). 90% means that small typos will still match. And so on. Uses PHP's [`similar_text()`](https://www.php.net/manual/en/function.similar-text.php).
+The third argument, `confidence` (percentage) is optional. Valid values are `0 - 100`. Recommended values are `80-85`. Default value is `100`.  
+Use this to control search fuzziness. 100% means that the function will only count a match if the spellings of the tag and keyword match exactly (unfuzzy search). 90% means that small typos will still match. And so on. Uses PHP's [`similar_text()`](https://www.php.net/manual/en/function.similar-text.php).
 
 
 Expected index format:
