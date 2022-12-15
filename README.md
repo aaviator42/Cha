@@ -1,7 +1,7 @@
 # Cha
-A search engine for tagged data.
+A search engine for tagged data. 
 
-`v1.0`: `2022-07-20`
+`v1.1`: `2022-12-14`
 
 ## What is this?
 
@@ -152,20 +152,24 @@ $qArray = Cha\addSupplements($qArray, $supplements);
 $qArray = Cha\dropWords($qArray, $droplist);
 
 //perform search
-$results = Cha\search($qArray, $index);
+$results = Cha\search($qArray, $index, 100);
 
 ```
 
 ## Functions
 
-All functions are contained within the `Cha` namespace. 
+All functions are contained within the `Cha` namespace. None are in-place.
 
 ### 1. `stringToArray(<query string>)`
 Converts the string to an array of keywords ("query array") and returns it. The entire string is converted into lowercase, and whitespace and punctuation is stripped from it.
 
 ### 2. `correctSpellings(<query array>, $corrections)`
 
-Correct common misspellings of words. Add words most relevant to your use case, although I guess you could load up [this](https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings) entire list.
+ > **Note**  
+ > As of v1.1 `search()` is capable of performing fuzzy searches, and so depending on your use case this function may not be required. See below.
+ 
+
+Corrects common misspellings of words in the array and returns it. Add words most relevant to your use case to `$corrections`, although I guess you could load up [this](https://en.wikipedia.org/wiki/Wikipedia:Lists_of_common_misspellings) entire list.
 
 Expected format of `$corrections`:
 
@@ -174,7 +178,16 @@ $corrections = ["acheive" => "achieve", "abuot" => "about"];
 ```
 
 ### 3. `depluralize(<query array>)`
-Adds depluralized forms of keywords to the array, but doesn't remove the originals. English specific, and far from perfect (it's a weird language!), but does work for most cases. Also does a couple other types of conversions that are technically not depluralizations, but are still handy. Will sometimes add nonsensical keywords to the array, but that doesn't really impact the search functionality.
+
+ > **Note**  
+ > As of v1.1 `search()` is capable of performing fuzzy searches, and so depending on your use case this function may not be required. See below.
+
+
+Adds depluralized forms of keywords to the array and returns it. English specific, and far from perfect (it's a weird language!), but does work for most cases. Also does a couple other types of conversions that are technically not depluralizations, but are still handy. Will sometimes add nonsensical keywords to the array, but that doesn't really impact the search functionality.
+
+This function comes in handy sometimes because if the tags in the search index and keywords in the search query are all in singular form then matching and search results are more accurate.
+
+Hint: if necessary you can loop your search index through this function to depluralise all tags.
 
 Types of conversions:
  * cities → city
@@ -190,7 +203,7 @@ Types of conversions:
  * played → play
 
 ### 3. `addSynonyms(<query array>, $thesaurus)`
-Add synonyms of the keywords to the array. If any of the words from a synonym group are contained in the array then all of them are added to it.
+Add synonyms of the keywords to the array and return it. If any of the words from a synonym group are contained in the array then all of them are added to it.
 
 Expected format of `$thesaurus`:
 
@@ -208,7 +221,7 @@ $supplements = ["cat" => ["calilco", "animal", "pet", "domestic"], "red" => ["co
 ```
 
 ### 5. `dropWords(<query array>, $droplist)`
-Use this to drop insignificant words (like "and", "of", "with", etc) from the query array for a small performance bump. 
+Use this to drop insignificant words (like "and", "of", "with", etc) from the query array for a small performance bump.
 
 Expected format of `$droplist`:
 
@@ -216,8 +229,15 @@ Expected format of `$droplist`:
 $droplist = ["of", "with", "along"];
 ```
 
-### 6. `search(<query array>, $index)`
+A longer general list can be found [here](https://gist.github.com/aaviator42/4d02e436d3c6e1aa0b51c7cab70ed083). 
+
+### 6. `search(<query array>, $index, <confidence>)`
 Uses the query array to search the index and returns an array sorted from most to least relevant. For optimal results, keep the tags in your index in singular form (hence the `depluralize()` function).
+
+**Fuzzy Searches:**
+
+The third argument, `confidence` (percentage) is optional. Valid values are `0 - 100`. Default value is `100`. Use this to control search fuzziness. 100% means that the function will only count a match if the spellings of the tag and keyword match exactly. 90% means that small typos will still match. And so on. Uses PHP's [`similar_text()`](https://www.php.net/manual/en/function.similar-text.php).
+
 
 Expected index format:
 ```php
@@ -234,22 +254,18 @@ $index = [
 The returned array contains the names of the items, and the number of tag matches that were found, like such:
 
 ```php
-array(6) {
-  ["img5"]=>
-  int(4)
-  ["img2"]=>
-  int(3)
-  ["img3"]=>
-  int(1)
-  ["img1"]=>
-  int(1)
-  ["img6"]=>
-  int(1)
-  ["img4"]=>
-  int(0)
-}
+Array
+(
+    [img5] => 4
+    [img2] => 3
+    [img1] => 1
+    [img3] => 1
+    [img6] => 1
+    [img4] => 0
+)
+
 ```
 
 
 ------
-Documentation updated: `2022-08-11`
+Documentation updated: `2022-12-15`
