@@ -158,7 +158,7 @@ $results = Cha\search($qArray, $index, 100);
 
 ## Functions
 
-All functions are contained within the `Cha` namespace. None are in-place.
+All functions are contained within the `Cha` namespace. All return an array, and none are in-place.
 
 ### 1. `stringToArray(<query string>)`
 Converts the string to an array of keywords ("query array") and returns it. The entire string is converted into lowercase, and whitespace and punctuation is stripped from it.
